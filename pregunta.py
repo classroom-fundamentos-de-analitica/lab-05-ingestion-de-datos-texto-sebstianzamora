@@ -25,8 +25,19 @@ for folder in folders:
     print(f"Generando archivos CSV para la carpeta {folder}")
     generar_csv_test_train(folder)
 
-#test_dataset = pd.read_csv("test_dataset.csv")
-#counts = test_dataset["sentiment"].value_counts()
-#print(counts["neutral"])
-#print(counts["positive"])
-#print(counts["negative"])
+# test_dataset = pd.read_csv("test_dataset.csv")
+# counts = test_dataset["sentiment"].value_counts()
+# print(counts["neutral"])
+# print(counts["positive"])
+# print(counts["negative"])
+
+
+# train_dataset = pd.read_csv("train_dataset.csv")
+# print(train_dataset.columns[0]) 
+# print(train_dataset.columns[1])
+
+# counts = train_dataset["sentiment"].value_counts()
+
+# print(counts["neutral"])
+# print(counts["positive"])
+# print(counts["negative"])

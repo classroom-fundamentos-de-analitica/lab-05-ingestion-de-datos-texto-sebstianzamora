@@ -1,43 +1,30 @@
-import pandas as pd
 import os
-
-def generar_csv_test_train(path):
-    data = {"phrase": [], "sentiment": []}
-    
-    for root, _, files in os.walk(path):
-        print(f"Recorriendo la carpeta {root}")
-        for file in files:
-            print(f"Recorriendo el archivo {file}")
-            if file.endswith(".txt"):
-                file_path = os.path.join(root, file)
-                with open(file_path, "r", encoding="utf-8") as f:
-                    data["phrase"].append(f.read().strip())
-                    data["sentiment"].append(os.path.basename(root))
-
-    df = pd.DataFrame(data)
-    output_csv = os.path.join(f"{os.path.basename(path)}_dataset.csv")
-    df.to_csv(output_csv, index=False, encoding="utf-8")
-
-# carpetas
-folders = ["train", "test"]
-
-for folder in folders:
-    print(f"Generando archivos CSV para la carpeta {folder}")
-    generar_csv_test_train(folder)
-
-# test_dataset = pd.read_csv("test_dataset.csv")
-# counts = test_dataset["sentiment"].value_counts()
-# print(counts["neutral"])
-# print(counts["positive"])
-# print(counts["negative"])
+import csv
+import pandas as pd
 
 
-# train_dataset = pd.read_csv("train_dataset.csv")
-# print(train_dataset.columns[0]) 
-# print(train_dataset.columns[1])
+def create_test_and_train_dataset():
+    path = ["/train/", "/test/"]
+    output_file = ["train_dataset.csv", "test_dataset.csv"]
+    folders = ["negative", "positive", "neutral"]
+    i = 0
+    for file in output_file:
+        with open(file, "w", newline="") as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerow(["phrase", "sentiment"])
+        for folder in folders:
+            folder_path = "data" + path[i] + folder
+            with open(file, "a", newline="") as csvfile:
+                writer = csv.writer(csvfile)
 
-# counts = train_dataset["sentiment"].value_counts()
+                for filename in os.listdir(folder_path):
+                    if filename.endswith(".txt"):
+                        file_path = os.path.join(folder_path, filename)
+                        with open(file_path, "r") as f:
+                            content = f.read()
+                            writer.writerow([content, folder])
+        i += 1
+    return
 
-# print(counts["neutral"])
-# print(counts["positive"])
-# print(counts["negative"])
+
+create_test_and_train_dataset()

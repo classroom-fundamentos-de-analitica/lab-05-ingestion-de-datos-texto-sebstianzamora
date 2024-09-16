@@ -4,10 +4,10 @@ import os.path
 
 import pandas as pd
 
-if not os.path.exists("train_dataset.csv"):
-    raise FileNotFoundError("File 'train_dataset.csv' not found")
-def test_lab5():
-    train_dataset = pd.read_csv("train_dataset.csv")
+#if not os.path.exists("train_dataset.csv"):
+#    raise FileNotFoundError("File 'train_dataset.csv' not found")
+#def test_lab5():
+    #train_dataset = pd.read_csv("train_dataset.csv")
 
     # assert train_dataset.columns[0] == "phrase"
     # assert train_dataset.columns[1] == "sentiment"

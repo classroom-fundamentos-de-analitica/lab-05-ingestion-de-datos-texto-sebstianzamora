@@ -1,30 +1,25 @@
-import os
 import csv
-import pandas as pd
+import os
+
+def create_csv_from_directory(directory, output_file):
+    data = []
+
+    for sentiment in ["positive", "negative", "neutral"]:
+        sentiment_path = os.path.join(directory, sentiment)
+        if os.path.exists(sentiment_path):
+            for filename in os.listdir(sentiment_path):
+                if filename.endswith(".txt"):
+                    file_path = os.path.join(sentiment_path, filename)
+                    with open(file_path, "r", encoding="utf-8") as file:
+                        phrase = file.read().strip()
+                        data.append([phrase, sentiment])
+
+    with open(output_file, "w", newline="", encoding="utf-8") as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(["phrase", "sentiment"])
+        writer.writerows(data)
 
 
-def create_test_and_train_dataset():
-    path = ["/train/", "/test/"]
-    output_file = ["train_dataset.csv", "test_dataset.csv"]
-    folders = ["negative", "positive", "neutral"]
-    i = 0
-    for file in output_file:
-        with open(file, "w", newline="") as csvfile:
-            writer = csv.writer(csvfile)
-            writer.writerow(["phrase", "sentiment"])
-        for folder in folders:
-            folder_path = "data" + path[i] + folder
-            with open(file, "a", newline="") as csvfile:
-                writer = csv.writer(csvfile)
+create_csv_from_directory("data/train", "train_dataset.csv")
 
-                for filename in os.listdir(folder_path):
-                    if filename.endswith(".txt"):
-                        file_path = os.path.join(folder_path, filename)
-                        with open(file_path, "r") as f:
-                            content = f.read()
-                            writer.writerow([content, folder])
-        i += 1
-    return
-
-
-create_test_and_train_dataset()
+create_csv_from_directory("data/test", "test_dataset.csv")
